@@ -77,4 +77,7 @@ jobs:
           app-name: 'next-app'
           slot-name: 'Production'
           package: next.zip
+      
+      - name: Delete zip file
+        run: rm next.zip
           
