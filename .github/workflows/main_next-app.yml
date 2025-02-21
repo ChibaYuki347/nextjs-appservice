@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - master
+      - feature/*
   workflow_dispatch:
 
 jobs:
@@ -64,6 +65,11 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4FF8A347AED14B0A852D298AB29C6550 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F85D50D42AD841A4B3891DE7BE89A826 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C99E630A46CC439487A7077D2AA13C15 }}
+
+      - name: Set Azure App Service environment variable
+        run: |
+          echo "This is the build ID: ${{ github.run_id }} setting it as an environment variable"
+          az webapp config appsettings set --name next-app --resource-group rg-next-appservice --settings NEXT_PUBLIC_BUILD_ID=${{ github.run_id }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
